@@ -1,9 +1,8 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://chinnow.live',
+  site: 'https://blog.chinnow.live',
   output: 'static',
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx()],
 });
