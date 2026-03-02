@@ -1,0 +1,46 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    pubDate: string;
+    section?: string;
+    emoji?: string;
+    tags?: string[];
+    minutesRead?: number;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const date = new Date(frontmatter.pubDate).toLocaleDateString('zh-TW', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+const sec = frontmatter.section || 'notes';
+const emoji = frontmatter.emoji || '📝';
+const sectionNames: Record<string,string> = { music: '音樂', film: '電影', tech: '科技', notes: '筆記' };
+---
+
+<BaseLayout title={`${frontmatter.title} — ChinNow`} description={frontmatter.description} section={sec}>
+  <div class="article-masthead">
+    <div class={`section-label ${sec}`}>{sectionNames[sec] || sec}</div>
+    <h1>{frontmatter.title}</h1>
+    {frontmatter.description && <p class="description">{frontmatter.description}</p>}
+    <div class="article-meta">
+      <span>{date}</span>
+      {frontmatter.minutesRead && <span>{frontmatter.minutesRead} 分鐘閱讀</span>}
+      {frontmatter.tags?.map(t => <span>#{t}</span>)}
+    </div>
+  </div>
+
+  <div class="article-cover">
+    <span>{emoji}</span>
+  </div>
+
+  <div class="article-body">
+    <div class="article-body-inner">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

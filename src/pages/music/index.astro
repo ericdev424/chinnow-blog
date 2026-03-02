@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const allPosts = await Astro.glob('./*.{md,mdx}');
+const posts = allPosts.sort((a, b) =>
+  new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime()
+);
+function fmtDate(d: string) {
+  return new Date(d).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+<BaseLayout title="音樂 — ChinNow" description="音樂推薦、評論、各種關於音樂的文字" section="music">
+  <div class="section-hero">
+    <div class="section-label music" style="color:rgba(255,255,255,0.6)">chinnow.live</div>
+    <h1>🎵 音樂</h1>
+    <p>推薦、評論、各種關於音樂的文字</p>
+  </div>
+  <div class="container">
+    <div class="post-grid">
+      {posts.map(post => (
+        <a href={post.url} class="post-card">
+          <div class="cover">{post.frontmatter.emoji || '🎵'}</div>
+          <div class="post-card-body">
+            <div class="section-label music">音樂</div>
+            <h3>{post.frontmatter.title}</h3>
+            <p class="excerpt">{post.frontmatter.description}</p>
+            <p class="meta">{fmtDate(post.frontmatter.pubDate)}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const allPosts = await Astro.glob('./*.{md,mdx}');
+const posts = allPosts.sort((a, b) =>
+  new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime()
+);
+function fmtDate(d: string) {
+  return new Date(d).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+<BaseLayout title="電影 — ChinNow" description="電影觀後感、評論、推薦清單" section="film">
+  <div class="section-hero">
+    <div class="section-label film" style="color:rgba(255,255,255,0.6)">chinnow.live</div>
+    <h1>🎬 電影</h1>
+    <p>觀後感、評論、推薦清單</p>
+  </div>
+  <div class="container">
+    <div class="post-grid">
+      {posts.map(post => (
+        <a href={post.url} class="post-card">
+          <div class="cover">{post.frontmatter.emoji || '🎬'}</div>
+          <div class="post-card-body">
+            <div class="section-label film">電影</div>
+            <h3>{post.frontmatter.title}</h3>
+            <p class="excerpt">{post.frontmatter.description}</p>
+            <p class="meta">{fmtDate(post.frontmatter.pubDate)}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

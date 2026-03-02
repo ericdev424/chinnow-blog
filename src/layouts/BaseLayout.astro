@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  section?: string;
+}
+
+const {
+  title = 'ChinNow — 音樂 · 電影 · 科技 · 筆記',
+  description = '分享音樂、電影、科技與各種筆記的個人空間。',
+  section = '',
+} = Astro.props;
+
+const path = Astro.url.pathname;
+const now = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+---
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="masthead-top">
+      <span class="masthead-date">{now}</span>
+      <div class="masthead-social">
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="/rss.xml">RSS</a>
+        <a href="/about">關於</a>
+      </div>
+    </div>
+    <div class="masthead-center">
+      <a href="/">
+        <h1 class="site-title">ChinNow</h1>
+      </a>
+      <p class="site-tagline">音樂 · 電影 · 科技 · 筆記</p>
+    </div>
+    <nav class="main-nav">
+      <a href="/music" class:list={['music', { active: path.startsWith('/music') }]}>🎵 音樂</a>
+      <a href="/film"  class:list={['film',  { active: path.startsWith('/film')  }]}>🎬 電影</a>
+      <a href="/tech"  class:list={['tech',  { active: path.startsWith('/tech')  }]}>💻 科技</a>
+      <a href="/notes" class:list={['notes', { active: path.startsWith('/notes') }]}>📝 筆記</a>
+    </nav>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-brand">ChinNow</span>
+      <div class="footer-links">
+        <a href="/music">音樂</a>
+        <a href="/film">電影</a>
+        <a href="/tech">科技</a>
+        <a href="/notes">筆記</a>
+        <a href="/about">關於</a>
+        <a href="https://chinnow.live">chinnow.live</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

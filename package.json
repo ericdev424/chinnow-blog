@@ -1,0 +1,16 @@
+{
+  "name": "chinnow-blog",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.0.0",
+    "@astrojs/mdx": "^2.0.0",
+    "@astrojs/sitemap": "^3.0.0"
+  }
+}
